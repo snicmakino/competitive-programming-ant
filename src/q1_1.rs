@@ -1,13 +1,16 @@
 mod q1_1 {
     pub fn solve(n: usize, m: i32, mut k: Vec<i32>) -> bool {
+        let mut kk = vec![];
         for a in 0..n {
             for b in 0..n {
-                for c in 0..n {
-                    for d in 0..n {
-                        if k[a] + k[b] + k[c] + k[d] == m {
-                            return true;
-                        }
-                    }
+                kk.push(k[a] + k[b]);
+            }
+        }
+        kk.sort();
+        for c in 0..n {
+            for d in 0..n {
+                if kk.binary_search(&(m - k[c] + k[d])).is_ok() {
+                    return true;
                 }
             }
         }
