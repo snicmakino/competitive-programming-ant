@@ -10,12 +10,6 @@ mod q1_6 {
         }
         0
     }
-
-    pub fn is_make_trianble(i: i32, j: i32, k: i32) -> bool {
-        let mut v = [i, j, k];
-        v.sort();
-        v[2] < v[0] + v[1]
-    }
 }
 
 #[cfg(test)]
