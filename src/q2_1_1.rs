@@ -1,21 +1,32 @@
 mod q2_1_1 {
     pub fn solve(n: usize, a: Vec<i32>, k: i32) -> bool {
-        dfs(0, 0, a, k)
+        let dfs = Dfs::new(n, a, k);
+        dfs.dfs(0, 0)
     }
 
-    fn dfs(index: usize, sum: i32, vec: Vec<i32>, target: i32) -> bool {
-        if sum == target {
-            return true;
+    struct Dfs {
+        n: usize,
+        list: Vec<i32>,
+        target: i32,
+    }
+
+    impl Dfs {
+        pub fn new(n: usize, list: Vec<i32>, target: i32) -> Dfs {
+            Dfs { n, list, target }
         }
-        if vec.len() > index {
-            if dfs(index + 1, sum, vec.clone(), target) {
+
+        pub fn dfs(&self, i: usize, sum: i32) -> bool {
+            if i == self.n {
+                return self.target == sum;
+            }
+            if self.dfs(i + 1, sum) {
                 return true;
             }
-            if dfs(index + 1, sum + vec[index], vec.clone(), target) {
+            if self.dfs(i + 1, sum + self.list[i]) {
                 return true;
             }
+            false
         }
-        false
     }
 }
 
