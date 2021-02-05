@@ -33,8 +33,8 @@ mod q2_1_3 {
             let directions = [[-1, 0], [0, -1], [0, 1], [1, 0]];
             let mut queue = VecDeque::new();
             queue.push_front([x, y, 1]);
-            // todo ゴールにたどり着けないときの処理
-            while true {
+
+            while queue.len() > 0 {
                 let current = queue.pop_back().unwrap();
                 for direction in directions.iter() {
                     let nx = current[0] + direction[0];
