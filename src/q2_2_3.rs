@@ -4,7 +4,7 @@ mod q2_2_3 {
     pub fn solve(n: usize, s: &str) -> String {
         let mut s0 = s.chars().collect::<VecDeque<char>>();
 
-        let mut ans: String = "".to_string();
+        let mut ans: String = String::new();
         for _ in 0..n {
             let ts = s0.iter().collect::<String>();
             let tr = s0.iter().rev().collect::<String>();
