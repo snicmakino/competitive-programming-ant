@@ -3,6 +3,7 @@ mod q1_6;
 mod q1_6_2;
 mod q2_1_1;
 mod q2_1_1_loop;
+mod q2_1_2;
 
 fn main() {
     println!("Hello, world!");
