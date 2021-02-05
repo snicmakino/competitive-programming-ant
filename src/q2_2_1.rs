@@ -1,28 +1,15 @@
 mod q2_2_1 {
-    pub fn solve(c: Vec<i32>, a: i32) -> i32 {
-        let coins = [
-            [500, c[5]],
-            [100, c[4]],
-            [50, c[3]],
-            [10, c[2]],
-            [5, c[1]],
-            [1, c[0]],
-        ];
+    pub fn solve(c: Vec<i32>, mut a: i32) -> i32 {
+        use std::cmp::min;
 
-        let mut num = 0;
-        let mut sum = 0;
-        for coin in coins.iter() {
-            let coin_price = coin[0];
-            let coin_num = coin[1];
-            for i in (0..coin_num + 1).rev() {
-                if i * coin_price + sum <= a {
-                    num += i;
-                    sum += i * coin_price;
-                    break;
-                }
-            }
+        let v = [1, 5, 10, 50, 100, 500];
+        let mut ans = 0;
+        for i in (1..6).rev() {
+            let t = min(a / v[i], c[i]);
+            a -= t * v[i];
+            ans += t;
         }
-        return num;
+        ans
     }
 }
 
