@@ -3,13 +3,22 @@ mod q2_2_4 {
     pub fn solve(n: usize, r: i32, mut x: Vec<i32>) -> i32 {
         x.sort();
         let mut ans = 0;
-        let mut min = x[0];
 
-        for i in 1..n {
-            if min + r <= x[i] {
-                ans += 1;
-                min = x[i];
+        let mut i = 0;
+        while i < n {
+            let s = x[i];
+            i += 1;
+
+            while i < n && x[i] <= s + r {
+                i += 1;
             }
+
+            let p = x[i - 1];
+            while i < n && x[i] <= p + r {
+                i += 1;
+            }
+
+            ans += 1;
         }
         ans
     }
