@@ -1,20 +1,26 @@
 mod q2_2_5 {
-    pub fn solve(n: usize, mut l: Vec<i32>) -> i32 {
+    use std::collections::VecDeque;
+
+    pub fn solve(_n: usize, mut l: Vec<i32>) -> i32 {
         l.sort();
+        let mut board = VecDeque::from(l);
         let mut cost = 0;
 
-        for i in 0..n - 1 {
-            if i + 2 > n - 1 || l[i] < l[i + 2] {
-                let sum = l[i] + l[i + 1];
-                cost += sum;
-                l[i + 1] = sum;
+        while board.len() > 2 {
+            let n1 = board.pop_front().unwrap();
+            let n2 = board.pop_front().unwrap();
+            let n3 = board.pop_front().unwrap();
+            if n1 < n3 {
+                cost += n1 + n2;
+                board.push_front(n3);
+                board.push_front(n1 + n2);
             } else {
-                let sum = l[i + 1] + l[i + 2];
-                cost += sum;
-                l[i + 2] = sum;
-                l[i + 1] = l[i];
+                cost += n2 + n3;
+                board.push_front(n1);
+                board.push_front(n2 + n3);
             }
         }
+        cost += board[0] + board[1];
         cost
     }
 }
