@@ -1,7 +1,8 @@
 mod q2_2_6 {
+    use std::collections::HashMap;
 
     pub fn solve(n: usize, wv: Vec<(i32, i32)>, maxw: i32) -> i32 {
-        let dfs = Dfs::new(n, wv, maxw);
+        let mut dfs = Dfs::new(n, wv, maxw);
         dfs.dfs(0, 0, 0)
     }
 
@@ -9,14 +10,24 @@ mod q2_2_6 {
         n: usize,
         wv: Vec<(i32, i32)>,
         maxw: i32,
+        memo: HashMap<(usize, i32), i32>,
     }
 
     impl Dfs {
         pub fn new(n: usize, wv: Vec<(i32, i32)>, maxw: i32) -> Dfs {
-            Dfs { n, wv, maxw }
+            Dfs {
+                n,
+                wv,
+                maxw,
+                memo: HashMap::new(),
+            }
         }
 
-        pub fn dfs(&self, i: usize, cw: i32, cv: i32) -> i32 {
+        pub fn dfs(&mut self, i: usize, cw: i32, cv: i32) -> i32 {
+            if self.memo.contains_key(&(i, cw)) {
+                return *self.memo.get(&(i, cw)).unwrap();
+            }
+
             if i == self.n {
                 return cv;
             }
@@ -25,7 +36,10 @@ mod q2_2_6 {
             if self.maxw < tw {
                 return cv;
             }
-            std::cmp::max(self.dfs(i + 1, cw, cv), self.dfs(i + 1, tw, tv))
+
+            let max = std::cmp::max(self.dfs(i + 1, cw, cv), self.dfs(i + 1, tw, tv));
+            self.memo.insert((i, cw), max);
+            max
         }
     }
 }
